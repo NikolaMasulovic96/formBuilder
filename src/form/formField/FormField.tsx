@@ -1,4 +1,5 @@
 import React from "react"
+import { Range } from "../FormBuilder"
 import "./form-field.css"
 
 export enum FromFieldType {
@@ -19,6 +20,7 @@ export interface FieldModel {
   required: boolean
   value: string
   options?: string[]
+  range: Range
   errorMessage: string | undefined
 }
 

@@ -1,7 +1,7 @@
 import React, { useState }  from "react"
 import "./form.css"
 import FormBuilder from "./FormBuilder"
-import FormField, { FieldModel } from "./formField/FormField"
+import FormField, { FieldModel, FromFieldType } from "./formField/FormField"
 
 const Form:React.FC = () => {
 
@@ -33,9 +33,16 @@ const Form:React.FC = () => {
   function validateForm() {
     const fieldsWithValidation: FieldModel[] = []
     fields.forEach((field) => {
-      if(field.required && field.value === ""){
+      if (field.type === FromFieldType.NUMBER_INPUT) {
+        const value = +field.value
+        if (!(value >= field.range.min && value <= field.range.max)) {
+          field.errorMessage = `Number must be between ${field.range.min} and ${field.range.max}!`
+        } else {
+          field.errorMessage = undefined
+        }
+      } else if (field.required && field.value === "") {
         field.errorMessage = "Field is required!"
-      }else{
+      } else {
         field.errorMessage = undefined
       }
       fieldsWithValidation.push(field)

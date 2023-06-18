@@ -2,6 +2,10 @@ import React, { useState }  from "react"
 import "./form.css"
 import { FieldModel, fieldTypes, FromFieldType } from "./formField/FormField"
 
+export interface Range {
+  min: number
+  max: number
+}
 
 interface FormBuilderProps {
   addField(fieldModel: FieldModel): void
@@ -11,6 +15,7 @@ const FormBuilder:React.FC<FormBuilderProps> = ({ addField }) => {
 
   const [fieldName, setFieldName] = useState<string>("")
   const [fieldType, setFieldType] = useState<string>(FromFieldType.TEXT_INPUT)
+  const [range, setRange] = useState<Range>({min: 0, max: 100})
   const [isRequired, setIsRequired] = useState<boolean>(false)
   const [options, setOptions] = useState<string>("")
   const [validationMessage, setValidationMessage] = useState<boolean>(false)
@@ -43,6 +48,17 @@ const FormBuilder:React.FC<FormBuilderProps> = ({ addField }) => {
     return parsedOptions
   }
 
+  function getDefaultValue(options: string[]){
+    const defaultValue = ""
+    if(fieldType === FromFieldType.SELECT_DROPDOWN){
+      return options[0]
+    }
+    if(fieldType === FromFieldType.NUMBER_INPUT){
+      return "0"
+    }
+    return defaultValue
+  }
+
   function submit() {
     if (validateBuilderFields()) {
       const parsedOptions = parseOptions()
@@ -51,8 +67,9 @@ const FormBuilder:React.FC<FormBuilderProps> = ({ addField }) => {
         name: fieldName,
         type: fieldType,
         required: isRequired,
-        value: fieldType === FromFieldType.SELECT_DROPDOWN ? parsedOptions[0] : "",
+        value: getDefaultValue(parsedOptions),
         options: parsedOptions,
+        range: range,
         errorMessage: undefined,
       }
       addField(newField)
@@ -80,6 +97,17 @@ const FormBuilder:React.FC<FormBuilderProps> = ({ addField }) => {
         })}
       </select>
     </div>
+    {fieldType === FromFieldType.NUMBER_INPUT && <div className="builder-field">
+    <span className="builder-field-label">{"Number range:"}</span>
+      <input
+        type={"number"}
+        defaultValue={range.min}
+        onChange={(val) => setRange({...range, min: +val.currentTarget.value})} />
+      <input
+        type={"number"}
+        defaultValue={range.max}
+        onChange={(val) => setRange({...range, max: +val.currentTarget.value})} />
+    </div>}
     <div className="builder-field row">
       <span className="builder-field-label">{"Is field required:"}</span>
       <input
