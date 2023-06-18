@@ -1,0 +1,76 @@
+.main-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex: row;
+}
+
+.builder-container {
+    height: 100%;
+    width:  40%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: left;
+    border: 1px solid black
+}
+
+.form-container {
+    width:  60%;
+    padding: 40px;
+}
+
+.table {
+    padding:40px
+}
+
+.builder-field {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    padding-top: 10px;
+}
+
+.builder-field-label {
+    font-weight: 600;
+    font-size: 18px;
+    text-align: left;
+    margin-bottom: 2px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.builder-button {
+    padding: 10px;
+    display: flex;
+    justify-content: left;
+    margin-top: 10px;
+}
+
+tr {
+    display: block;
+    float: left;
+  }
+  th,
+  td {
+    display: block;
+    text-align: left;
+    padding: 6px;
+    border: 1px solid #ccc;
+  }
+
+.validation-message {
+    color: red;
+    font-weight: 600;
+    margin-top: 10px;
+    font-size: 15px;
+}
